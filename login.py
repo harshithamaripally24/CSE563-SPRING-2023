@@ -4,13 +4,13 @@
 # Description: The project is intended to demonstrate secure user authentication using Flask and MySQL. It includes password hashing, and email verification with OTP during user registration and login. 
 
 import os
+import re
 from flask import Flask, render_template, request, redirect, url_for
 from db_connection import db
 import random
 import hashlib
 import string
 import smtplib
-import bcrypt
 
 from flask_mail import Mail, Message
 
@@ -61,10 +61,20 @@ def register():
     email = request.form['email']
     password = request.form['password']
     otp = ""
+    role = request.form['role']
 
     # Validate password length
     if len(password) < 8:
         return render_template('signup.html', error='Password must be at least 8 characters long')
+    
+    if not re.search(r'[A-Z]', password):
+        return render_template('signup.html', error='Password must contain at least one uppercase letter')
+    
+    if not re.search(r'[a-z]', password):
+        return render_template('signup.html', error='Password must contain at least one lowercase letter')
+    
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return render_template('signup.html', error='Password must contain at least one special character')
 
     # Hash password
     password_bytes = password.encode('utf-8')
@@ -85,8 +95,8 @@ def register():
     # If user does not exist, insert data into database and redirect to login page
     else:
         otp = ''.join(random.choices(string.digits, k=6))
-        query = 'INSERT INTO users (name, email, password, otp) VALUES (%s, %s, %s, %s)'
-        values = (name, email, hash_hex, otp)
+        query = 'INSERT INTO users (name, email, password, otp, role) VALUES (%s, %s, %s, %s, %s)'
+        values = (name, email, hash_hex, otp, role)
         cursor.execute(query, values)
         db.commit()
         send_email(email, otp)  # Send OTP to user's email

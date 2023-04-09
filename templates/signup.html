@@ -1,33 +1,124 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            color: #333333;
+            margin-top: 50px;
+            text-align: center;
+        }
+        form {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 400px;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #333333;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #555555;
+        }
+        a {
+            color: #333333;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            margin: 0 auto;
+            width: 150px;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .success-msg {
+            color: #28a745;
+            text-align: center;
+            font-weight: bold;
+        }
+        .error-msg {
+            color: #dc3545;
+        }
+    </style>
+    <script>
+        function displayError(message) {
+            alert(message);
+        }
+    </script>
 </head>
-
 <body>
     <h1>Sign Up</h1>
 
-    {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    {% if success %}
-    <p style="color: green;">{{ success }}</p>
-    {% endif %}
+{% if error %}
+    <script>
+        displayError("{{ error }}");
+    </script>
+{% endif %}
 
-    <form method="POST" action="{{ url_for('register') }}">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required> <br><br>
+{% if success %}
+    <p class="success-msg">{{ success }}</p>
+{% endif %}
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required> <br><br>
+<form method="POST" action="{{ url_for('register') }}">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required> <br><br>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required>
 
-        <button type="submit" class="btn btn-success">Sign Up</button>
-    </form><br><br>
-    <a href="{{ url_for('home') }}">Return to Home</a>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required>
+
+    <label for="role">Role:</label>
+    <select name="role" id="role">
+        <option value="user">User</option>
+        <option value="manager">Manager</option>
+        <option value="admin">Administrator</option>
+    </select>
+    <br><br>
+    <button type="submit" class="btn-success">Sign Up</button>
+</form><br><br>
+<center><a href="{{ url_for('home') }}">Return to Home</a></center>
 </body>
-
 </html>
