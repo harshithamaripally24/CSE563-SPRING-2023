@@ -1,0 +1,17 @@
+DROP DATABASE IF EXISTS test_db;
+
+CREATE DATABASE test_db;
+
+USE test_db;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255),
+  otp VARCHAR(255)
+);
+
+SELECT * FROM USERS;
