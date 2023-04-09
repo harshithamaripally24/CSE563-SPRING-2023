@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Employee Dashboard</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+			margin-bottom: 30px;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.card {
+			background-color: #ffffff;
+			border: 1px solid #cccccc;
+			border-radius: 5px;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			margin-bottom: 20px;
+			flex-basis: calc(50% - 10px);
+			box-sizing: border-box;
+		}
+		.card h2 {
+			margin-top: 0;
+		}
+		.card p {
+			margin-bottom: 0;
+		}
+		button {
+			background-color: #006699;
+			color: #fff;
+			border: none;
+			padding: 12px 24px;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 24px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		button:hover {
+			background-color: #004466;
+		}
+</style>
+
+</head>
+<body>
+	<h1>Employee Dashboard</h1>
+	<div class="container">
+		<div class="card">
+			<h2>Effort Log</h2>
+			<p>Log your daily efforts on tasks assigned to you.</p>
+			<br>
+			<a href="/effort_logger">Log Effort</a>
+		</div>
+		<div class="card">
+			<h2>Reports</h2>
+			<p>View reports on your progress.</p>
+			<br>
+			<a href="/view_reports">View Reports</a>
+		</div>
+	</div>
+	<form action="{{ url_for('logout') }}" method="get">
+		<button type="submit">Logout</button>
+	</form>
+</body>
+</html>
+	

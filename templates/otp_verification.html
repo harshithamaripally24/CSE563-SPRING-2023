@@ -48,12 +48,25 @@
 			margin-bottom: 20px;
 			text-align: center;
 		}
+		.error-msg {
+            color: #dc3545;
+        }
 	</style>
 </head>
 <body>
-	{% if error %}
+	<!-- {% if error %}
 		<p>{{ error }}</p>
+	{% endif %} -->
+	{% if error %}
+    <div class="error-msg" role="alert">
+        {{ error }}
+    </div>
 	{% endif %}
+<!-- 
+	{% if success %}
+    <p class="success-msg">{{ success }}</p>
+    {% endif %}	 -->
+
 	<form action="{{ url_for('otp_verification') }}" method="POST" enctype='multipart/form-data' >
 		<input type="hidden" name="email" value="{{ email }}">
 		<input type="hidden" name="password" value="{{ password }}">
