@@ -5,7 +5,7 @@
 
 import os
 import re
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from db_connection import db
 import random
 import hashlib
@@ -100,6 +100,7 @@ def register():
         cursor.execute(query, values)
         db.commit()
         send_email(email, otp)  # Send OTP to user's email
+        # flash('OTP has been sent to your registered email', 'success')
         return redirect(url_for('otp_verification', email=email, redirect_to='register'))
 
 # Login page
@@ -138,6 +139,8 @@ def verify():
         cursor.execute(query, values)
         db.commit()
         send_email(email, otp)  # Send OTP to user's email
+        # flash('OTP has been sent to your registered email', 'success')
+
         return redirect(url_for('otp_verification', email=email, redirect_to='login'))
     # If user does not exist, redirect to home page with error message
     else:
@@ -167,23 +170,44 @@ def otp_verification():
             redirect_to = request.form['redirect_to']
             # print("redirect to", redirect_to)
             if redirect_to == 'login':
-                return redirect(url_for('success', message='Login successful!'))
+                # return redirect(url_for('success', message='Login successful!'))
+                 if user[0][5] == 'employee':
+                    return redirect(url_for('employee_dashboard'))
+                 elif user[0][5] == 'manager':
+                    return redirect(url_for('manager_dashboard'))
+                 elif user[0][5]== 'admin':
+                    return redirect(url_for('admin_dashboard'))
             elif redirect_to == 'register':
-                return render_template('signup.html', success='User registered successfully')
+                    return render_template('signup.html', success='User registered successfully')
 
         else:
             # If OTP is incorrect, redirect to OTP verification page with error message
             email = request.args.get('email')
             redirect_to = request.args.get('redirect_to')
-            if redirect_to == 'login':
-                return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error='Incorrect OTP'))
-            elif redirect_to == 'register':
-                return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error='Incorrect OTP'))
+            error = 'Invalid OTP'
+            return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error=error))
+            # if redirect_to == 'login':
+            #     return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error='Incorrect OTP'))
+            # elif redirect_to == 'register':
+            #     return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error='Incorrect OTP'))
 
+@app.route('/employee/dashboard')
+def employee_dashboard():
+    return render_template('employee_dashboard.html')
+
+# Manager home page
+@app.route('/manager/dashboard')
+def manager_dashboard():
+    return render_template('manager_dashboard.html')
+
+# Admin home page
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    return render_template('admin_dashboard.html')
 
 def send_email(email, otp):
     # Create message object
-    msg = Message('OTP Verification', sender=mail_username, recipients=[email])
+    msg = Message(subject='OTP Verification', sender=mail_username, recipients=[email])
 
     # Set message body
     msg.body = f'Your OTP is {otp}. Please enter this code in the OTP verification page to complete your login.'

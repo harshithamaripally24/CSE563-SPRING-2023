@@ -14,4 +14,8 @@ CREATE TABLE users (
   otp VARCHAR(255)
 );
 
+ALTER TABLE users
+ADD roles VARCHAR(255);
+
+
 SELECT * FROM USERS;
