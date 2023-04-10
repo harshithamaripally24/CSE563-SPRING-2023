@@ -1,4 +1,3 @@
-# Project Title: User Authentication
 # Author : Harshitha Maripally
 # Co-Author : Naga Vardhini Garugu
 # Description: The project is intended to demonstrate secure user authentication using Flask and MySQL. It includes password hashing, and email verification with OTP during user registration and login. 
