@@ -15,6 +15,8 @@ import string
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 from flask import make_response
+from flask import make_response
+import pandas as pd
 
 from flask_mail import Mail, Message
 
@@ -294,13 +296,36 @@ def captcha_image():
 
     return response
 
+
+@app.route('/manage_users', methods=['GET', 'POST'])
+def manage_users():
+    if request.method == 'POST':
+        # get the user ID from the form submission
+        user_id = request.form.get('user_id')
+
+        # delete the user from the database
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM users WHERE id=%s", (user_id,))
+        db.commit()
+
+        # redirect to the same page to refresh the user list
+        return redirect(url_for('manage_users', success='User deleted successfully'))
+
+    else:
+        # fetch the list of users
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE role != 'admin'")
+        users = cursor.fetchall()
+
+        # render the template and pass the list of users to it
+        return render_template('manage_users.html', users=users)
+
+
+
 @app.route('/manage_projects')
 def manage_projects():
     return render_template('manage_projects.html')
 
-# @app.route('/manage_employees')
-# def manage_employees():
-#     return render_template('manage_employees.html')
 
 @app.route('/employee_details', methods=['GET', 'POST'])
 def employee_details():
@@ -356,7 +381,7 @@ def add_task():
         cursor.execute(query, values)
         db.commit()
 
-        return "Task added successfully"
+        return redirect(url_for('add_task', success='Task added successfully'))
 
 
 @app.route('/effort_logger', methods=['GET', 'POST'])
@@ -387,7 +412,41 @@ def effort_logger():
         cursor.execute(query, values)
 
         db.commit()
-        return "Hours logged successfully"
+        #return render_template('effort_logger.html', success="Hours logged successfully")
+        return redirect(url_for('effort_logger', success='Hours logged successfully'))
+
+@app.route('/view reports')
+def view_reports():
+    return render_template('download_reports.html')
+   
+
+@app.route('/download_reports')
+def download_reports():
+    # fetch data from the database
+    cursor = db.cursor()
+    cursor.execute("SELECT users.id, users.name, users.email, tasks.task_name, tasks.task_hours FROM users INNER JOIN tasks ON users.id = tasks.assigned_to")
+    data = cursor.fetchall()
+
+    # create a pandas dataframe from the fetched data
+    df = pd.DataFrame(data, columns=['Employee ID', 'Employee Name', 'Employee Email', 'Assigned Task', 'Logged Hours'])
+
+    # create an excel writer object
+    writer = pd.ExcelWriter('employee_effort.xlsx', engine='xlsxwriter')
+
+    # write the dataframe to the excel file
+    df.to_excel(writer, sheet_name='Sheet1', index=False)
+
+    # save the excel file and close the writer object
+    writer.save()
+
+    # create a Flask response object with the excel file and download it
+    response = make_response()
+    response.headers['Content-Type'] = 'application/octet-stream'
+    response.headers['Content-Disposition'] = 'attachment; filename=employee_effort.xlsx'
+    with open('employee_effort.xlsx', 'rb') as file:
+        response.data = file.read()
+    return response
+
 
 if __name__ == '__main__':
 

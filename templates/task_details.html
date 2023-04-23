@@ -45,20 +45,23 @@
       color: #555;
       border: 1px solid #ddd;
       border-radius: 4px;
+      width: 250px;
     }
 
     button {
-      background-color: #007bff;
-      border: none;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
+      background-color: #004466;
+			border: none;
+			color: #fff;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+			display: inline-block;
+			width: 100px;
     }
 
     button:hover {
-      background-color: #0062cc;
+      background-color: #004466;
     }
 
     #task-details {
@@ -81,21 +84,19 @@
     }
 
     .back-button {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #007bff;
-      border: none;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
+      background-color: #004466;
+			border: none;
+			color: #fff;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+			display: inline-block;
+			width: 100px;
     }
 
     .back-button:hover {
-      background-color: #0062cc;
+      background-color: #004466;
     }
   </style>
   <script>
@@ -127,10 +128,16 @@
     <p><strong>Hours:</strong> {{ task[3] }}</p>
   </div>
   {% endif %}
-  <form action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">
-    <button type="submit">Logout</button>
-  </form>
-  <button onclick="goBack()" class="back-button">Go Back</button>
+  <div style="display: flex; justify-content: center; margin-top: 24px;">
+		<div>
+			<button onclick="goBack()" class="back-button">Go Back</button>
+		</div>
+		<div style="margin-left: 10px;">
+			<form action="{{ url_for('logout') }}" method="get">
+				<button type="submit" class="logout">Logout</button>
+			</form>
+		</div>
+	</div>
 </body>
 
 </html>

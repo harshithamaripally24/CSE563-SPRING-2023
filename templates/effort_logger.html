@@ -43,32 +43,52 @@
 		}
 
 		button[type="submit"] {
-			background-color: #4CAF50;
-			color: #fff;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 3px;
-			font-size: 16px;
-			cursor: pointer;
-		}
-
-		.back-button {
-			position: fixed;
-			bottom: 20px;
-			left: 50%;
-			transform: translateX(-50%);
-			background-color: #007bff;
+			background-color: #004466;
 			border: none;
 			color: #fff;
 			padding: 8px 16px;
 			border-radius: 4px;
 			cursor: pointer;
 			font-size: 16px;
+			display: inline-block;
+			width: 100px;
+		}
+
+		.back-button {
+			background-color: #004466;
+			border: none;
+			color: #fff;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+			display: inline-block;
+			width: 100px;
 		}
 
 		.back-button:hover {
-			background-color: #0062cc;
+			background-color: #004466;
 		}
+
+		.btn-success {
+            background-color: #004466;
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button-success:hover {
+            background-color: #004466;
+        }
+		
+		.success-msg {
+            color: #28a745;
+            text-align: center;
+            font-weight: bold;
+        }
 	</style>
 	<script>
 		function goBack() {
@@ -90,10 +110,23 @@
 		<label for="task-hours">Effort (in hours):</label>
 		<input type="number" id="task-hours" name="task-hours" min="0" max="8" required>
 		<br>
-		<button type="submit">Log Effort</button>
+		<button type="submit" class="btn-success">Log Effort</button>
+		{% if request.args.get('success') %}
+            <p class="success-msg">{{ request.args.get('success') }}</p>
+        {% endif %}
 	</form>
-		<button type="submit" action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">Logout</button>
-	<button onclick="goBack()" class="back-button">Go Back</button>
+		<!-- <button type="submit" onclick="location.href='{{ url_for('logout') }}'" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">Logout</button>
+	<button onclick="goBack()" class="back-button">Go Back</button> -->
+	<div style="display: flex; justify-content: center; margin-top: 24px;">
+		<div>
+			<button onclick="goBack()" class="back-button">Go Back</button>
+		</div>
+		<div style="margin-left: 10px;">
+			<form action="{{ url_for('logout') }}" method="get">
+				<button type="submit" class="logout">Logout</button>
+			</form>
+		</div>
+	</div>
 </body>
 
 </html>

@@ -36,7 +36,7 @@
 			margin-bottom: 0;
 		}
         button {
-				background-color: #006699;
+				background-color: #004466;
 				color: #fff;
 				border: none;
 				padding: 12px 24px;
@@ -51,25 +51,28 @@
 			button:hover {
 				background-color: #004466;
 			}
+        .card:nth-child(1) {
+            margin: 0 auto;
+        }
 	</style>
 </head>
 <body>
 	<h1>Administrator Dashboard</h1>
     
 	<div class="container">
-		<div class="card">
+		<!-- <div class="card">
 			<h2>Projects</h2>
 			<p>View and manage projects.</p>
             <br>
 			<a href="/manage_projects">Manage Projects</a>
-		</div>
+		</div> -->
 		<div class="card">
 			<h2>Users</h2>
 			<p>View and manage users.</p>
             <br>
-			<a href="/manage_users">Manage Users</a>
+			<a href="{{ url_for('manage_users') }}">Manage Users</a>
 		</div>
-		<div class="card">
+		<!-- <div class="card">
 			<h2>Access Control</h2>
 			<p>Manage user roles and permissions.</p>
 			<br>
@@ -80,7 +83,7 @@
 			<p>Manage system security settings.</p>
 			<br>
 			<a href="/manage_security">Manage Security</a>
-		</div>
+		</div> -->
 	</div>
 	<form action="{{ url_for('logout') }}" method="get">
         <button type="submit">Logout</button>

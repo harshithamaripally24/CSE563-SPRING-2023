@@ -36,7 +36,7 @@
 			margin-bottom: 0;
 		}
 		button {
-			background-color: #006699;
+			background-color: #004466;
 			color: #fff;
 			border: none;
 			padding: 12px 24px;
@@ -61,14 +61,14 @@
 			<h2>Effort Log</h2>
 			<p>Log your daily efforts on tasks assigned to you.</p>
 			<br>
-			<a href="{{ url_for('effort_logger') }}">Manage Projects</a>
+			<a href="{{ url_for('effort_logger') }}">Log Effort</a>
 		</div>
 		<div class="card">
 			<h2>Reports</h2>
 			<p>View reports on your progress.</p>
 
 			<br>
-			<a href="/view_reports">View Reports</a>
+			<a href="{{ url_for('view_reports') }}">View Reports</a>
 		</div>
 	</div>
 	<form action="{{ url_for('logout') }}" method="get">
