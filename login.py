@@ -10,6 +10,11 @@ import random
 import hashlib
 import string
 import smtplib
+import random
+import string
+from io import BytesIO
+from PIL import Image, ImageDraw, ImageFont
+from flask import make_response
 
 from flask_mail import Mail, Message
 
@@ -225,6 +230,70 @@ def success():
 def logout():
     print("log out is clicked")
     return redirect(url_for('home'))
+
+
+@app.route('/captcha_image')
+def captcha_image():
+    # Generate a random string of 5 uppercase letters, numbers and lowercase letters
+    captcha_text = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=5))
+
+    # Create a PIL image object
+    width, height = 150, 60
+    image = Image.new('RGB', (width, height), color=(255, 255, 255))
+
+    # Create a drawing context
+    draw = ImageDraw.Draw(image)
+
+    # Set a random font size and font type
+    font_size = random.randint(30, 40)
+    font_type = random.choice(['arial.ttf', 'arialbd.ttf', 'calibri.ttf', 'comic.ttf', 'georgia.ttf'])
+
+    # Set a random font
+    font = ImageFont.truetype(font_type, font_size)
+
+    # Get the size of the captcha text
+    bbox = draw.textbbox((0, 0), captcha_text, font=font)
+
+    # Calculate the center position for the captcha text
+    x = (width - bbox[2]) / 2
+    y = (height - bbox[3]) / 2
+
+    # Draw the captcha text
+    draw.text((x, y), captcha_text, fill=(0, 0, 0), font=font)
+
+    # Add some noise to the image
+    for i in range(200):
+        x = random.randint(0, width - 1)
+        y = random.randint(0, height - 1)
+        draw.point((x, y), fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+
+    # Add random lines
+    for i in range(5):
+        x1 = random.randint(0, width - 1)
+        y1 = random.randint(0, height - 1)
+        x2 = random.randint(0, width - 1)
+        y2 = random.randint(0, height - 1)
+        draw.line((x1, y1, x2, y2), fill=(0, 0, 0), width=random.randint(1, 2))
+
+    # Add random shapes
+    for i in range(3):
+        x1 = random.randint(0, width - 20)
+        y1 = random.randint(0, height - 20)
+        x2 = random.randint(x1 + 10, width - 1)
+        y2 = random.randint(y1 + 10, height - 1)
+        draw.rectangle((x1, y1, x2, y2), outline=(0, 0, 0), width=random.randint(1, 2))
+
+    # Save the image to a byte buffer
+    buffer = BytesIO()
+    image.save(buffer, 'jpeg')
+    buffer.seek(0)
+
+    # Create a Flask response object with the image data and content type
+    response = make_response(buffer.read())
+    response.headers.set('Content-Type', 'image/jpeg')
+
+    return response
+
 
 if __name__ == '__main__':
 

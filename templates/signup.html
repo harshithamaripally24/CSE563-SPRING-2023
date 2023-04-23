@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Sign Up</title>
     <style>
@@ -7,11 +8,14 @@
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
         }
+
         h1 {
             color: #333333;
-            margin-top: 50px;
+            margin-top: 30px;
             text-align: center;
+            margin-bottom: 10px;
         }
+
         form {
             background-color: #ffffff;
             border: 1px solid #cccccc;
@@ -21,11 +25,13 @@
             max-width: 400px;
             padding: 20px;
         }
+
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
         }
+
         input[type="text"],
         input[type="email"],
         input[type="password"],
@@ -38,22 +44,29 @@
             margin-bottom: 20px;
             box-sizing: border-box;
         }
+
         input[type="submit"] {
             background-color: #333333;
             color: #ffffff;
             border: none;
             cursor: pointer;
         }
+
         input[type="submit"]:hover {
             background-color: #555555;
         }
+
         a {
             color: #333333;
             text-decoration: none;
+            font-weight: bold;
+            font-size: large;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
         .btn-success {
             background-color: #28a745;
             color: #ffffff;
@@ -65,20 +78,61 @@
             display: block;
             margin: 0 auto;
             width: 150px;
+            font-size: 16px;
         }
+
         .btn-success:hover {
             background-color: #218838;
         }
+
         p {
             margin-bottom: 20px;
         }
+
         .success-msg {
             color: #28a745;
             text-align: center;
             font-weight: bold;
         }
+
         .error-msg {
             color: #dc3545;
+        }
+
+        #captcha {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        #captcha-image {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        select[name="role"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
         }
     </style>
     <script>
@@ -87,38 +141,43 @@
         }
     </script>
 </head>
+
 <body>
     <h1>Sign Up</h1>
 
-{% if error %}
+    {% if error %}
     <script>
         displayError("{{ error }}");
     </script>
-{% endif %}
+    {% endif %}
 
-{% if success %}
+    {% if success %}
     <p class="success-msg">{{ success }}</p>
-{% endif %}
+    {% endif %}
 
-<form method="POST" action="{{ url_for('register') }}">
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name" required>
+    <form method="POST" action="{{ url_for('register') }}">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
 
-    <label for="role">Role:</label>
-    <select name="role" id="role">
-        <option value="employee">Employee</option>
-        <option value="manager">Project Manager</option>
-        <option value="admin">Administrator</option>
-    </select>
-    <br><br>
-    <button type="submit" class="btn-success">Sign Up</button>
-</form><br><br>
-<center><a href="{{ url_for('home') }}">Return to Home</a></center>
+        <label for="role">Role</label>
+        <select name="role" id="role">
+            <option value="employee">Employee</option>
+            <option value="manager">Project Manager</option>
+            <option value="admin">Administrator</option>
+        </select>
+        <label for="captcha">Captcha</label>
+        <input type="text" id="captcha" name="captcha" required>
+        <img src="{{ url_for('captcha_image') }}" alt="captcha">
+        <br><br>
+        <button type="submit" class="btn-success">Sign Up</button>
+    </form>
+    <center><a href="{{ url_for('home') }}">Return to Home</a></center>
 </body>
+
 </html>

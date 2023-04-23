@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Home Page</title>
 	<style>
@@ -7,11 +8,13 @@
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
 		}
+
 		h1 {
 			color: #333333;
 			margin-top: 50px;
 			text-align: center;
 		}
+
 		form {
 			background-color: #ffffff;
 			border: 1px solid #cccccc;
@@ -21,11 +24,13 @@
 			max-width: 400px;
 			padding: 20px;
 		}
+
 		label {
 			display: block;
 			font-weight: bold;
 			margin-bottom: 10px;
 		}
+
 		input[type="email"],
 		input[type="password"],
 		input[type="submit"] {
@@ -37,15 +42,18 @@
 			margin-bottom: 20px;
 			box-sizing: border-box;
 		}
+
 		input[type="submit"] {
 			background-color: #333333;
 			color: #ffffff;
 			border: none;
 			cursor: pointer;
 		}
+
 		input[type="submit"]:hover {
 			background-color: #555555;
 		}
+
 		.alert {
 			background-color: #ffcccc;
 			color: #cc0000;
@@ -54,32 +62,81 @@
 			border-radius: 5px;
 			border: 1px solid #cc0000;
 		}
+
 		a {
 			color: #333333;
 			text-decoration: none;
 		}
+
 		a:hover {
 			text-decoration: underline;
 		}
+
+		.btn-success {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            margin: 0 auto;
+            width: 150px;
+			font-size: 16px;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+		#captcha {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			border-radius: 5px;
+			border: 1px solid #cccccc;
+			margin-bottom: 20px;
+			box-sizing: border-box;
+		}
+
+		#captcha-image {
+			display: block;
+			margin: 0 auto;
+			max-width: 100%;
+			height: auto;
+			border: 1px solid #cccccc;
+			border-radius: 5px;
+			margin-bottom: 20px;
+		}
 	</style>
 </head>
+
 <body>
 	<h1>Welcome to our Website!</h1>
 	{% if logged_in %}
-		<p>You are logged in.</p>
+	<p>You are logged in.</p>
 	{% else %}
-		{% if message %}
-			<div class="alert">{{ message }}</div>
-		{% endif %}
-		<form method="POST" action="{{ url_for('verify') }}">
-			<label for="email">Email:</label>
-			<input type="email" id="email" name="email" required>
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" required>
-			<input type="submit" value="Log In">
-			<input type="hidden" name="message" value="Incorrect email or password" required>
-		</form>
-		<p><center>Are you a new user? <a href="{{ url_for('signup') }}">Sign up here</a>.</center></p>
+	{% if message %}
+	<div class="alert">{{ message }}</div>
+	{% endif %}
+	<form method="POST" action="{{ url_for('verify') }}">
+		<label for="email">Email</label>
+		<input type="email" id="email" name="email" required>
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password" required>
+		<label for="captcha">Captcha</label>
+		<input type="text" id="captcha" name="captcha" required>
+		<img src="{{ url_for('captcha_image') }}" alt="captcha">
+		<br><br>
+		<!-- <input type="submit" value="Log In"> -->
+		<button type="submit" class="btn-success">Login</button>
+		<input type="hidden" name="message" value="Incorrect email or password" required>
+	</form>
+	<p>
+		<center>Are you a new user? <a href="{{ url_for('signup') }}">Sign up here</a>.</center>
+	</p>
 	{% endif %}
 </body>
+
 </html>

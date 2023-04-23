@@ -15,7 +15,7 @@ CREATE TABLE users (
 );
 
 ALTER TABLE users
-ADD roles VARCHAR(255);
+ADD role VARCHAR(255);
 
 
 SELECT * FROM USERS;
