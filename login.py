@@ -1,6 +1,6 @@
-# Author : Harshitha Maripally
-# Co-Author : Naga Vardhini Garugu
-# Description: The project is intended to demonstrate secure user authentication using Flask and MySQL. It includes password hashing, and email verification with OTP during user registration and login. 
+# Author 1: Harshitha Maripally
+# Author 2: Naga Vardhini Garugu
+# Description: The project is intended to demonstrate secure user authentication using Python, Flask and MySQL. It includes password hashing, email verification with OTP and capctcha verification during user registration and login. 
 
 import os
 import re
@@ -192,10 +192,7 @@ def otp_verification():
             redirect_to = request.args.get('redirect_to')
             error = 'Invalid OTP'
             return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error=error))
-            # if redirect_to == 'login':
-            #     return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error='Incorrect OTP'))
-            # elif redirect_to == 'register':
-            #     return redirect(url_for('otp_verification', message='Incorrect OTP', email=email, redirect_to=redirect_to, error='Incorrect OTP'))
+
 
 @app.route('/employee/dashboard')
 def employee_dashboard():
@@ -412,7 +409,6 @@ def effort_logger():
         cursor.execute(query, values)
 
         db.commit()
-        #return render_template('effort_logger.html', success="Hours logged successfully")
         return redirect(url_for('effort_logger', success='Hours logged successfully'))
 
 @app.route('/view reports')

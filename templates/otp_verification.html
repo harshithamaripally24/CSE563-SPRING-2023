@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>OTP Verification</title>
 	<style>
@@ -7,6 +8,7 @@
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
 		}
+
 		form {
 			background-color: #ffffff;
 			border: 1px solid #cccccc;
@@ -16,11 +18,13 @@
 			max-width: 400px;
 			padding: 20px;
 		}
+
 		label {
 			display: block;
 			font-weight: bold;
 			margin-bottom: 10px;
 		}
+
 		input[type="text"],
 		button[type="submit"] {
 			display: block;
@@ -31,6 +35,7 @@
 			margin-bottom: 20px;
 			box-sizing: border-box;
 		}
+
 		button[type="submit"] {
 			background-color: #28a745;
 			color: #ffffff;
@@ -38,49 +43,54 @@
 			cursor: pointer;
 			margin-left: 5px;
 			align-items: center;
-			width:150px;
+			width: 150px;
 			font-weight: bold;
 			margin: 0 auto;
-  			display: block;
+			display: block;
 
 		}
+
 		button[type="submit"]:hover {
 			background-color: #555555;
 		}
+
 		p {
 			color: #cc0000;
 			font-weight: bold;
 			margin-bottom: 20px;
 			text-align: center;
 		}
+
 		.error-msg {
-            color: #dc3545;
-        }
+			color: #dc3545;
+		}
 	</style>
 </head>
+
 <body>
 	<!-- {% if error %}
 		<p>{{ error }}</p>
 	{% endif %} -->
 	{% if error %}
-    <div class="error-msg" role="alert">
-        {{ error }}
-    </div>
+	<div class="error-msg" role="alert">
+		{{ error }}
+	</div>
 	{% endif %}
-<!-- 
+	<!-- 
 	{% if success %}
     <p class="success-msg">{{ success }}</p>
     {% endif %}	 -->
 
-	<form action="{{ url_for('otp_verification') }}" method="POST" enctype='multipart/form-data' >
+	<form action="{{ url_for('otp_verification') }}" method="POST" enctype='multipart/form-data'>
 		<input type="hidden" name="email" value="{{ email }}">
 		<input type="hidden" name="password" value="{{ password }}">
 		<input type="hidden" name="otp" value="{{ otp }}">
 		<input type="hidden" name="redirect_to" value="{{ redirect_to }}">
 
-	<label>OTP</label>
-	<input type="text" name="user_otp">
-	<button type="submit">Verify OTP</button>
-</form>
+		<label>OTP</label>
+		<input type="text" name="user_otp">
+		<button type="submit">Verify OTP</button>
+	</form>
 </body>
+
 </html>

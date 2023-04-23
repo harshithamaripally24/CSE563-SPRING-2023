@@ -75,22 +75,22 @@
 		}
 
 		.btn-success {
-            background-color: #28a745;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: block;
-            margin: 0 auto;
-            width: 150px;
+			background-color: #28a745;
+			color: #ffffff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			cursor: pointer;
+			margin-top: 10px;
+			display: block;
+			margin: 0 auto;
+			width: 150px;
 			font-size: 16px;
-        }
+		}
 
-        .btn-success:hover {
-            background-color: #218838;
-        }
+		.btn-success:hover {
+			background-color: #218838;
+		}
 
 		#captcha {
 			display: block;
@@ -131,7 +131,6 @@
 		<input type="text" id="captcha" name="captcha" required>
 		<img src="{{ url_for('captcha_image') }}" alt="captcha">
 		<br><br>
-		<!-- <input type="submit" value="Log In"> -->
 		<button type="submit" class="btn-success">Login</button>
 		<input type="hidden" name="message" value="Incorrect email or password" required>
 	</form>

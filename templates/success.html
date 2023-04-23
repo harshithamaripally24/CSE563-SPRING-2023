@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Success Page</title>
-		<style>
-			body {
-				font-family: Arial, sans-serif;
-				background-color: #f2f2f2;
-			}
-			h1 {
-				color: #006699;
-				text-align: center;
-			}
-			p {
-				font-size: 18px;
-				line-height: 1.5;
-				text-align: center;
-			}
-			button {
-				background-color: #006699;
-				color: #fff;
-				border: none;
-				padding: 12px 24px;
-				font-size: 16px;
-				border-radius: 4px;
-				cursor: pointer;
-				margin-top: 24px;
-				display: block;
-				margin-left: auto;
-				margin-right: auto;
-			}
-			button:hover {
-				background-color: #004466;
-			}
-		</style>
-	</head>
-	<body>
-		<h1>Login Successful!</h1>
-		<p>You have successfully logged in.</p>
-		<form action="{{ url_for('logout') }}" method="get">
-			<button type="submit">Logout</button>
-		</form>
-	</body>
+
+<head>
+	<title>Success Page</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+
+		h1 {
+			color: #006699;
+			text-align: center;
+		}
+
+		p {
+			font-size: 18px;
+			line-height: 1.5;
+			text-align: center;
+		}
+
+		button {
+			background-color: #006699;
+			color: #fff;
+			border: none;
+			padding: 12px 24px;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 24px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		button:hover {
+			background-color: #004466;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Login Successful!</h1>
+	<p>You have successfully logged in.</p>
+	<form action="{{ url_for('logout') }}" method="get">
+		<button type="submit">Logout</button>
+	</form>
+</body>
+
 </html>

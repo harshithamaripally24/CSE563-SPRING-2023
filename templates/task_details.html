@@ -50,14 +50,14 @@
 
     button {
       background-color: #004466;
-			border: none;
-			color: #fff;
-			padding: 8px 16px;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 16px;
-			display: inline-block;
-			width: 100px;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      display: inline-block;
+      width: 100px;
     }
 
     button:hover {
@@ -85,14 +85,14 @@
 
     .back-button {
       background-color: #004466;
-			border: none;
-			color: #fff;
-			padding: 8px 16px;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 16px;
-			display: inline-block;
-			width: 100px;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      display: inline-block;
+      width: 100px;
     }
 
     .back-button:hover {
@@ -129,15 +129,15 @@
   </div>
   {% endif %}
   <div style="display: flex; justify-content: center; margin-top: 24px;">
-		<div>
-			<button onclick="goBack()" class="back-button">Go Back</button>
-		</div>
-		<div style="margin-left: 10px;">
-			<form action="{{ url_for('logout') }}" method="get">
-				<button type="submit" class="logout">Logout</button>
-			</form>
-		</div>
-	</div>
+    <div>
+      <button onclick="goBack()" class="back-button">Go Back</button>
+    </div>
+    <div style="margin-left: 10px;">
+      <form action="{{ url_for('logout') }}" method="get">
+        <button type="submit" class="logout">Logout</button>
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
