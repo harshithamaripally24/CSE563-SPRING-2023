@@ -1,6 +1,6 @@
 # Author 1: Harshitha Maripally
 # Author 2: Naga Vardhini Garugu
-# Description: The project is intended to demonstrate secure user authentication using Python, Flask and MySQL. It includes password hashing, email verification with OTP and capctcha verification during user registration and login. 
+# Description: The project is intended to demonstrate secure user authentication using Python, Flask and MySQL. It includes features such as password hashing, email verification with OTP, and captcha verification during user registration and login to ensure enhanced security. Additionally, the project implements user roles, where users can have different levels of access to the system based on their roles. The application includes multiple dashboards, each designed for a specific user role, with various tasks and functionalities specific to the user's role. 
 
 import os
 import re
