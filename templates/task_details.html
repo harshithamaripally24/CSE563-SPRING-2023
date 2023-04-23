@@ -1,100 +1,136 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Task Details</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        text-align: center;
-        margin-top: 50px;
-      }
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      label {
-        display: inline-block;
-        margin-right: 10px;
-      }
-      select {
-        margin-right: 10px;
-        padding: 8px;
-        border: none;
-        background: transparent;
-        background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-        background-repeat: no-repeat;
-        background-position: right 8px center;
-        background-size: 16px;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        font-size: 16px;
-        color: #555;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
-      button {
-        background-color: #007bff;
-        border: none;
-        color: #fff;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-      button:hover {
-        background-color: #0062cc;
-      }
-      #task-details {
-        margin-top: 20px;
-        border: 1px solid #ddd;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      #task-details p {
-        margin: 10px 0;
-      }
-      #task-details h2 {
-        margin-top: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Task Details</h1>
-    <form class="container" action="{{ url_for('task_details') }}" method="post">
-      <div>
-        <label for="task-select">Select Task:</label>
-        <select id="task-select" name="task_id">
-          {% for task in tasks %}
-            <option value="{{ task[0] }}">{{ task[1] }}</option>
-          {% endfor %}
-        </select>
-        <button type="submit" id="view-button">View</button>
-      </div>
-    </form>
-    {% if task is not none %}
-      <div id="task-details">
-        <h2>Task Details</h2>
-        <p><strong>Task Name:</strong> {{ task[0] }}</p>
-        <p><strong>Task Description:</strong> {{ task[1] }}</p>
-        <p><strong>Assigned to:</strong> {{ task[2] }}</p>
-        <p><strong>Hours:</strong> {{ task[3] }}</p>
-      </div>
-    {% endif %}
-    <form action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">
-      <button type="submit">Logout</button>
-    </form>
-  </body>  
+
+<head>
+  <title>Task Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    select {
+      margin-right: 10px;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 16px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      font-size: 16px;
+      color: #555;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0062cc;
+    }
+
+    #task-details {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    #task-details p {
+      margin: 10px 0;
+    }
+
+    #task-details h2 {
+      margin-top: 0;
+    }
+
+    .back-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .back-button:hover {
+      background-color: #0062cc;
+    }
+  </style>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Task Details</h1>
+  <form class="container" action="{{ url_for('task_details') }}" method="post">
+    <div>
+      <label for="task-select">Select Task:</label>
+      <select id="task-select" name="task_id">
+        {% for task in tasks %}
+        <option value="{{ task[0] }}">{{ task[1] }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" id="view-button">View</button>
+    </div>
+  </form>
+  {% if task is not none %}
+  <div id="task-details">
+    <h2>Task Details</h2>
+    <p><strong>Task Name:</strong> {{ task[0] }}</p>
+    <p><strong>Task Description:</strong> {{ task[1] }}</p>
+    <p><strong>Assigned to:</strong> {{ task[2] }}</p>
+    <p><strong>Hours:</strong> {{ task[3] }}</p>
+  </div>
+  {% endif %}
+  <form action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">
+    <button type="submit">Logout</button>
+  </form>
+  <button onclick="goBack()" class="back-button">Go Back</button>
+</body>
+
 </html>

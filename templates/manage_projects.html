@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Manage Projects</title>
 	<style>
@@ -7,11 +8,13 @@
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
 		}
+
 		h1 {
 			text-align: center;
 			margin-top: 50px;
 			margin-bottom: 30px;
 		}
+
 		.container {
 			max-width: 800px;
 			margin: 0 auto;
@@ -19,6 +22,7 @@
 			flex-wrap: wrap;
 			justify-content: space-between;
 		}
+
 		.card {
 			background-color: #ffffff;
 			border: 1px solid #cccccc;
@@ -29,12 +33,15 @@
 			flex-basis: calc(50% - 10px);
 			box-sizing: border-box;
 		}
+
 		.card h2 {
 			margin-top: 0;
 		}
+
 		.card p {
 			margin-bottom: 0;
 		}
+
 		button {
 			background-color: #006699;
 			color: #fff;
@@ -48,11 +55,13 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
+
 		button:hover {
 			background-color: #004466;
 		}
 	</style>
 </head>
+
 <body>
 	<h1>Manage Projects</h1>
 	<div class="container">
@@ -69,13 +78,14 @@
 			<button onclick="redirectToAddTask('{{ url_for('add_task') }}')">Add New Task</button>
 		</div>
 	</div>
-    <script>
-        function redirectToTaskDetails(url) {
+	<script>
+		function redirectToTaskDetails(url) {
 			window.location.href = url;
 		}
-        function redirectToAddTask(url) {
+		function redirectToAddTask(url) {
 			window.location.href = url;
 		}
 	</script>
 </body>
+
 </html>

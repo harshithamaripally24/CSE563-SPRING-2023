@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Add Task</title>
 	<style>
@@ -7,11 +8,13 @@
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
 		}
+
 		h1 {
 			text-align: center;
 			margin-top: 50px;
 			margin-bottom: 30px;
 		}
+
 		.form-container {
 			max-width: 500px;
 			margin: 0 auto;
@@ -22,11 +25,14 @@
 			padding: 20px;
 			box-sizing: border-box;
 		}
+
 		label {
 			display: block;
 			margin-bottom: 10px;
 		}
-		input[type="text"], select {
+
+		input[type="text"],
+		select {
 			width: 100%;
 			padding: 12px 20px;
 			margin: 8px 0;
@@ -35,6 +41,7 @@
 			border-radius: 4px;
 			resize: vertical;
 		}
+
 		button {
 			background-color: #006699;
 			color: #fff;
@@ -48,9 +55,11 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
+
 		button:hover {
 			background-color: #004466;
 		}
+
 		.logout {
 			position: absolute;
 			top: 10px;
@@ -63,14 +72,39 @@
 			border-radius: 4px;
 			cursor: pointer;
 		}
+
 		.logout:hover {
 			background-color: #004466;
 		}
+
+		.back-button {
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #007bff;
+			border: none;
+			color: #fff;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		.back-button:hover {
+			background-color: #0062cc;
+		}
 	</style>
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 </head>
+
 <body>
 	<h1>Add Task</h1>
-	<form class="form-container"  method="POST">
+	<form class="form-container" method="POST">
 		<label for="task-name">Task Name</label>
 		<input type="text" id="task-name" name="task-name">
 
@@ -79,14 +113,16 @@
 
 		<label for="assigned-to">Assign To</label>
 		<select id="assigned-to" name="assigned-to">
-            {% for employee in employees %}
-            <option value="{{ employee[0] }}">{{ employee[1] }}</option>
-            {% endfor %}
-        </select><br>
-        <button type="submit">Add Task</button>
+			{% for employee in employees %}
+			<option value="{{ employee[0] }}">{{ employee[1] }}</option>
+			{% endfor %}
+		</select><br>
+		<button type="submit">Add Task</button>
 	</form>
-    <form action="{{ url_for('logout') }}" method="get">
-		<button type="submit" style="position: absolute; top: 0; right: 0;">Logout</button>
-	</form>
+	<form action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">
+		<button type="submit">Logout</button>
+	  </form>
+	<button onclick="goBack()" class="back-button">Go Back</button>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Effort Logger</title>
 	<style>
@@ -7,11 +8,13 @@
 			font-family: Arial, sans-serif;
 			background-color: #f2f2f2;
 		}
+
 		h1 {
 			text-align: center;
 			margin-top: 50px;
 			color: #333;
 		}
+
 		form {
 			width: 50%;
 			margin: 0 auto;
@@ -20,13 +23,16 @@
 			border-radius: 5px;
 			box-shadow: 0px 0px 5px #888;
 		}
+
 		label {
 			display: block;
 			margin-bottom: 10px;
 			font-weight: bold;
 			color: #666;
 		}
-		select, input {
+
+		select,
+		input {
 			width: 100%;
 			padding: 10px;
 			border: none;
@@ -35,6 +41,7 @@
 			font-size: 16px;
 			margin-bottom: 20px;
 		}
+
 		button[type="submit"] {
 			background-color: #4CAF50;
 			color: #fff;
@@ -44,15 +51,39 @@
 			font-size: 16px;
 			cursor: pointer;
 		}
+
+		.back-button {
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #007bff;
+			border: none;
+			color: #fff;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		.back-button:hover {
+			background-color: #0062cc;
+		}
 	</style>
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 </head>
+
 <body>
 	<h1>Effort Logger</h1>
 	<form class="form-container" method="POST" action="{{ url_for('effort_logger') }}">
 		<label for="assigned-task">Select Task:</label>
-        <select id="assigned-task" name="assigned-task">
+		<select id="assigned-task" name="assigned-task">
 			{% for task in tasks %}
-				<option value="{{ task[1] }}">{{ task[1] }}</option>
+			<option value="{{ task[1] }}">{{ task[1] }}</option>
 			{% endfor %}
 		</select>
 		<br>
@@ -61,8 +92,8 @@
 		<br>
 		<button type="submit">Log Effort</button>
 	</form>
-    <form action="{{ url_for('logout') }}" method="get">
-		<button type="submit" style="position: absolute; top: 0; right: 0;">Logout</button>
-	</form>
+		<button type="submit" action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">Logout</button>
+	<button onclick="goBack()" class="back-button">Go Back</button>
 </body>
+
 </html>

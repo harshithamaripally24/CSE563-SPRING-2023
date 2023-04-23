@@ -313,6 +313,7 @@ def employee_details():
         employee_id = request.form['employee_id']
         cursor.execute("SELECT users.name, users.email, tasks.task_name, tasks.task_hours FROM users INNER JOIN tasks on users.id=tasks.assigned_to WHERE users.id = %s", (employee_id,))
         employee = cursor.fetchone()
+    cursor.fetchall()
     return render_template('employee_details.html', employees=employees, employee=employee)
 
 
@@ -327,6 +328,7 @@ def task_details():
         task_id = request.form['task_id']
         cursor.execute("SELECT tasks.task_name, tasks.task_desc, users.name, tasks.task_hours FROM tasks INNER JOIN users ON tasks.assigned_to = users.id WHERE tasks.task_id = %s", (task_id,))
         task = cursor.fetchone()
+    cursor.fetchall()
     return render_template('task_details.html', tasks=tasks, task=task)
 
 
