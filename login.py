@@ -4,7 +4,7 @@
 
 import os
 import re
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, jsonify, render_template, request, redirect, url_for, flash
 from db_connection import db
 import random
 import hashlib
@@ -294,6 +294,98 @@ def captcha_image():
 
     return response
 
+@app.route('/manage_projects')
+def manage_projects():
+    return render_template('manage_projects.html')
+
+# @app.route('/manage_employees')
+# def manage_employees():
+#     return render_template('manage_employees.html')
+
+@app.route('/employee_details', methods=['GET', 'POST'])
+def employee_details():
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users WHERE role = 'employee'")
+    employees = cursor.fetchall()
+    employee = None
+    print(employees)
+    if request.method == 'POST':
+        employee_id = request.form['employee_id']
+        cursor.execute("SELECT users.name, users.email, tasks.task_name, tasks.task_hours FROM users INNER JOIN tasks on users.id=tasks.assigned_to WHERE users.id = %s", (employee_id,))
+        employee = cursor.fetchone()
+    return render_template('employee_details.html', employees=employees, employee=employee)
+
+
+@app.route('/task_details', methods=['GET', 'POST'])
+def task_details():
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM tasks")
+    tasks = cursor.fetchall()
+    task = None
+    print(tasks)
+    if request.method == 'POST':
+        task_id = request.form['task_id']
+        cursor.execute("SELECT tasks.task_name, tasks.task_desc, users.name, tasks.task_hours FROM tasks INNER JOIN users ON tasks.assigned_to = users.id WHERE tasks.task_id = %s", (task_id,))
+        task = cursor.fetchone()
+    return render_template('task_details.html', tasks=tasks, task=task)
+
+
+@app.route('/add_task', methods=['GET', 'POST'])
+def add_task():
+    if request.method == 'GET':
+        # fetch the list of employees
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE role='employee'")
+        employees = cursor.fetchall()
+
+        # render the template and pass the list of employees to it
+        return render_template('add_task.html', employees=employees)
+
+    elif request.method == 'POST':
+        # Get form data
+        task_name = request.form['task-name']
+        task_desc = request.form['task-desc']
+        assigned_to = request.form['assigned-to']
+
+        # Insert into database
+        cursor = db.cursor()
+        query = "INSERT INTO tasks (task_name, task_desc, assigned_to) VALUES (%s, %s, %s)"
+        values = (task_name, task_desc, assigned_to)
+        cursor.execute(query, values)
+        db.commit()
+
+        return "Task added successfully"
+
+
+@app.route('/effort_logger', methods=['GET', 'POST'])
+def effort_logger():
+    if request.method == 'GET':
+        # fetch tasks from the tasks table in the database
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM tasks")
+        tasks = cursor.fetchall()
+
+        # pass the list of tasks to the template
+        return render_template('effort_logger.html', tasks=tasks)
+    
+    elif request.method == 'POST':
+        # Get form data
+        task_name = request.form['assigned-task']
+        task_hours = request.form['task-hours']
+        
+        print(task_hours)
+        print(task_name)
+
+        # Insert into database
+        cursor = db.cursor()
+        query = "UPDATE tasks SET task_hours = %s WHERE task_name = %s"
+        values = (task_hours, task_name)
+        print("Query:", query)
+        print("Values:", values)
+        cursor.execute(query, values)
+
+        db.commit()
+        return "Hours logged successfully"
 
 if __name__ == '__main__':
 

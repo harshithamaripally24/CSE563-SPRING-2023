@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Employee Details</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      label {
+        display: inline-block;
+        margin-right: 10px;
+      }
+      select {
+        margin-right: 10px;
+        padding: 8px;
+        border: none;
+        background: transparent;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        background-size: 16px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        font-size: 16px;
+        color: #555;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100px;
+      }
+      button {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #0062cc;
+      }
+      #employee-details {
+        display: none;
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      #employee-details p {
+        margin: 10px 0;
+      }
+      #employee-details h2 {
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Employee Details</h1>
+    <form class="container" action="{{ url_for('employee_details') }}" method="post">
+      <div>
+        <label for="employee-select">Select Employee :</label>
+        <select id="employee-select" name="employee_id">
+          {% for employee in employees %}
+            <option value="{{ employee[0] }}">{{ employee[1] }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" id="view-button">View</button>
+      </div>
+    </form>
+    {% if employee is not none %}
+      <div id="employee-details">
+        <h2>Employee Details</h2>
+        <p><strong>Employee Name:</strong> {{ employee[0] }}</p>
+        <p><strong>Employee Email Address:</strong> {{ employee[1] }}</p>
+        <p><strong>Assigned Task:</strong> {{ employee[2] }}</p>
+        <p><strong>Hours:</strong> {{ employee[3] }}</p>
+      </div>
+    {% endif %}
+    <form action="{{ url_for('logout') }}" method="get" style="position: absolute; top: 10px; right: 10px; margin: 10px;">
+      <button type="submit">Logout</button>
+    </form>
+  </body>  
+</html>

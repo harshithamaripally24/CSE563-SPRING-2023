@@ -19,3 +19,13 @@ ADD role VARCHAR(255);
 
 
 SELECT * FROM USERS;
+
+CREATE TABLE tasks (
+  task_id INT AUTO_INCREMENT PRIMARY KEY,
+  task_name VARCHAR(255),
+  task_desc VARCHAR(255),
+  assigned_to VARCHAR(255),
+  task_hours VARCHAR(255)
+);
+
+SELECT * FROM TASKS;

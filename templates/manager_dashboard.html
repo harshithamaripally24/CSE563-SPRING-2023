@@ -58,16 +58,16 @@
     
 	<div class="container">
 		<div class="card">
-			<h2>Users</h2>
-			<p>View and manage users.</p>
+			<h2>Employees</h2>
+			<p>View and manage employees.</p>
             <br>
-			<a href="/manage_users">Manage Users</a>
+			<a href="{{ url_for('employee_details') }}">Manage Employees</a>
 		</div>
 		<div class="card">
 			<h2>Projects</h2>
 			<p>View and manage projects.</p>
             <br>
-			<a href="/manage_products">Manage Projects</a>
+			<a href="{{ url_for('manage_projects') }}">Manage Projects</a>
 		</div>
         <div class="card">
 			<h2>Reports</h2>

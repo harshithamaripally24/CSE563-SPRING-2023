@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Task</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+			margin-bottom: 30px;
+		}
+		.form-container {
+			max-width: 500px;
+			margin: 0 auto;
+			background-color: #ffffff;
+			border: 1px solid #cccccc;
+			border-radius: 5px;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			box-sizing: border-box;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		input[type="text"], select {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			resize: vertical;
+		}
+		button {
+			background-color: #006699;
+			color: #fff;
+			border: none;
+			padding: 12px 24px;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 24px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		button:hover {
+			background-color: #004466;
+		}
+		.logout {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			background-color: #006699;
+			color: #fff;
+			border: none;
+			padding: 12px 24px;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.logout:hover {
+			background-color: #004466;
+		}
+	</style>
+</head>
+<body>
+	<h1>Add Task</h1>
+	<form class="form-container"  method="POST">
+		<label for="task-name">Task Name</label>
+		<input type="text" id="task-name" name="task-name">
+
+		<label for="task-desc">Task Description</label>
+		<input type="text" id="task-desc" name="task-desc">
+
+		<label for="assigned-to">Assign To</label>
+		<select id="assigned-to" name="assigned-to">
+            {% for employee in employees %}
+            <option value="{{ employee[0] }}">{{ employee[1] }}</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit">Add Task</button>
+	</form>
+    <form action="{{ url_for('logout') }}" method="get">
+		<button type="submit" style="position: absolute; top: 0; right: 0;">Logout</button>
+	</form>
+</body>
+</html>

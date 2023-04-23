@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Employee Dashboard</title>
+	<title>Manage Projects</title>
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -51,29 +51,31 @@
 		button:hover {
 			background-color: #004466;
 		}
-</style>
-
+	</style>
 </head>
 <body>
-	<h1>Employee Dashboard</h1>
+	<h1>Manage Projects</h1>
 	<div class="container">
 		<div class="card">
-			<h2>Effort Log</h2>
-			<p>Log your daily efforts on tasks assigned to you.</p>
-			<br>
-			<a href="{{ url_for('effort_logger') }}">Manage Projects</a>
+			<h2>Project 1</h2>
+			<p>Project details go here.</p>
+			<button onclick="redirectToTaskDetails('{{ url_for('task_details') }}')">View Tasks</button>
+			<button onclick="redirectToAddTask('{{ url_for('add_task') }}')">Add New Task</button>
 		</div>
 		<div class="card">
-			<h2>Reports</h2>
-			<p>View reports on your progress.</p>
-
-			<br>
-			<a href="/view_reports">View Reports</a>
+			<h2>Project 2</h2>
+			<p>Project details go here.</p>
+			<button onclick="redirectToTaskDetails('{{ url_for('task_details') }}')">View Tasks</button>
+			<button onclick="redirectToAddTask('{{ url_for('add_task') }}')">Add New Task</button>
 		</div>
 	</div>
-	<form action="{{ url_for('logout') }}" method="get">
-		<button type="submit">Logout</button>
-	</form>
+    <script>
+        function redirectToTaskDetails(url) {
+			window.location.href = url;
+		}
+        function redirectToAddTask(url) {
+			window.location.href = url;
+		}
+	</script>
 </body>
 </html>
-	
