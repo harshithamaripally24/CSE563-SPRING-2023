@@ -51,7 +51,7 @@
 			cursor: pointer;
 			font-size: 16px;
 			display: inline-block;
-			width: 100px;
+			width: 150px;
 		}
 
 		.back-button {
@@ -63,7 +63,7 @@
 			cursor: pointer;
 			font-size: 16px;
 			display: inline-block;
-			width: 100px;
+			width: 150px;
 		}
 
 		.back-button:hover {
@@ -78,6 +78,11 @@
 			border-radius: 4px;
 			cursor: pointer;
 			font-size: 16px;
+			width: 100%;
+			margin: 0 auto;
+			display: block;
+			max-width: 250px;
+			text-align: center;
 		}
 
 		.button-success:hover {
@@ -92,7 +97,7 @@
 	</style>
 	<script>
 		function goBack() {
-			window.history.back();
+			window.location.href = "{{ url_for('employee_dashboard') }}";
 		}
 	</script>
 </head>
@@ -110,19 +115,18 @@
 		<label for="task-hours">Effort (in hours):</label>
 		<input type="number" id="task-hours" name="task-hours" min="0" max="8" required>
 		<br>
-		<button type="submit" class="btn-success">Log Effort</button>
+		<center><button type="submit" class="btn-success">Log Effort</button></center>
 		{% if request.args.get('success') %}
 		<p class="success-msg">{{ request.args.get('success') }}</p>
 		{% endif %}
 	</form>
 	<div style="display: flex; justify-content: center; margin-top: 24px;">
 		<div>
-			<button onclick="goBack()" class="back-button">Go Back</button>
+			<button type="button" onclick="goBack()" class="back-button">Go Back</button>
 		</div>
 		<div style="margin-left: 10px;">
-			<form action="{{ url_for('logout') }}" method="get">
-				<button type="submit" class="logout">Logout</button>
-			</form>
+			<button type="submit" class="logout"
+				onclick="window.location.href='{{ url_for('logout') }}'">Logout</button>
 		</div>
 	</div>
 </body>

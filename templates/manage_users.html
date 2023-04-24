@@ -122,7 +122,7 @@
     </style>
     <script>
         function goBack() {
-            window.history.back();
+            window.location.href = "{{ url_for('admin_dashboard') }}";
         }
     </script>
 </head>

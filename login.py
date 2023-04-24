@@ -4,7 +4,7 @@
 
 import os
 import re
-from flask import Flask, jsonify, render_template, request, redirect, url_for, flash
+from flask import Flask, jsonify, render_template, request, redirect, session, url_for, flash
 from db_connection import db
 import random
 import hashlib
@@ -37,6 +37,9 @@ app.config['MAIL_DEFAULT_SENDER'] = mail_username
 
 mail = Mail(app)
 
+# Set up secret key for the session
+app.config.from_pyfile('config.py')
+app.secret_key = app.config['SECRET_KEY']
 
 # Set up database connection
 
@@ -92,7 +95,6 @@ def register():
     values = (email,)
     cursor.execute(query, values)
     user = cursor.fetchall()
-    # cursor.close()  # Close the previous result set
 
     # If user exists, show message
     if user:
@@ -106,7 +108,7 @@ def register():
         cursor.execute(query, values)
         db.commit()
         send_email(email, otp)  # Send OTP to user's email
-        # flash('OTP has been sent to your registered email', 'success')
+
         return redirect(url_for('otp_verification', email=email, redirect_to='register'))
 
 # Login page
@@ -125,7 +127,13 @@ def verify():
     password_bytes = password.encode('utf-8')
     hash_object = hashlib.sha256(password_bytes)
     hash_hex = hash_object.hexdigest()
-
+    captcha = request.form['captcha']
+    
+    # Check if captcha is valid
+    captcha_text = session.get('captcha_text')
+    if captcha != captcha_text:
+        return redirect(url_for('home', message='Invalid captcha'))
+    
     # Check if user exists in database
     query = 'SELECT * FROM users WHERE email = %s AND password = %s'
     values = (email, hash_hex)
@@ -145,7 +153,6 @@ def verify():
         cursor.execute(query, values)
         db.commit()
         send_email(email, otp)  # Send OTP to user's email
-        # flash('OTP has been sent to your registered email', 'success')
 
         return redirect(url_for('otp_verification', email=email, redirect_to='login'))
     # If user does not exist, redirect to home page with error message
@@ -174,7 +181,6 @@ def otp_verification():
             print("otp verified")
             # If OTP is correct, log user in and redirect
             redirect_to = request.form['redirect_to']
-            # print("redirect to", redirect_to)
             if redirect_to == 'login':
                 # return redirect(url_for('success', message='Login successful!'))
                  if user[0][5] == 'employee':
@@ -235,6 +241,7 @@ def logout():
 def captcha_image():
     # Generate a random string of 5 uppercase letters, numbers and lowercase letters
     captcha_text = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=5))
+    session['captcha_text'] = captcha_text  # Store captcha text in session
 
     # Create a PIL image object
     width, height = 150, 60
@@ -291,6 +298,7 @@ def captcha_image():
     response = make_response(buffer.read())
     response.headers.set('Content-Type', 'image/jpeg')
 
+    print(response)
     return response
 
 
