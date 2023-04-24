@@ -19,6 +19,7 @@ pip install Flask-WTF
 pip install WTForms
 pip install mysql-connector-python
 pip install python-dotenv
+pip install xlsxwriter
 You may need to use pip3 instead of pip depending on your system configuration
 •	Environment variables are defined in the .env file
 
@@ -46,6 +47,18 @@ CREATE TABLE users (
 );
 
 SELECT * FROM USERS;
+
+ALTER TABLE users ADD role VARCHAR(255);
+
+CREATE TABLE tasks (
+  task_id INT AUTO_INCREMENT PRIMARY KEY,
+  task_name VARCHAR(255),
+  task_desc VARCHAR(255),
+  assigned_to VARCHAR(255),
+  task_hours VARCHAR(255)
+);
+
+SELECT * FROM TASKS;
 
 3.	Update the database credentials to match your MySQL database:
 
