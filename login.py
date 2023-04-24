@@ -38,8 +38,7 @@ app.config['MAIL_DEFAULT_SENDER'] = mail_username
 mail = Mail(app)
 
 # Set up secret key for the session
-app.config.from_pyfile('config.py')
-app.secret_key = app.config['SECRET_KEY']
+app.secret_key = os.getenv("SECRET_KEY")
 
 # Set up database connection
 
