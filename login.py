@@ -11,10 +11,8 @@ import hashlib
 import string
 import smtplib
 import random
-import string
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
-from flask import make_response
 from flask import make_response
 import pandas as pd
 
